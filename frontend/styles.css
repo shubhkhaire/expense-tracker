@@ -1,0 +1,914 @@
+/* ===========================================================
+   EXPENSE TRACKER — PREMIUM APPLE UI (FULL CSS)
+   - Light + Dark mode variables
+   - Animations, modal, toasts, FAB, sidebar, progress bars
+   - Use inline style="--fill:75%" on .progress-fill to set progress
+   - Screenshot file placeholders (server path -> url): 
+     /mnt/data/Screenshot 2025-11-21 203352.png
+     /mnt/data/Screenshot 2025-11-21 203344.png
+     /mnt/data/Screenshot 2025-11-21 203336.png
+     /mnt/data/Screenshot 2025-11-21 203328.png
+     /mnt/data/Screenshot 2025-11-21 203319.png
+   =========================================================== */
+
+/* -------------------------
+   THEME VARIABLES & IMAGES
+   ------------------------- */
+:root {
+    /* primary */
+    --blue-1: #0a84ff;
+    --blue-2: #006fe6;
+    --bg: #f4f5f7;
+    --surface: #ffffff;
+    --muted: #6b7280;
+    --text: #1d1d1f;
+    --glass-border: rgba(0, 0, 0, 0.06);
+    --card-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    --radius-lg: 16px;
+
+    /* screenshots (server will map these paths to URLs) */
+    --screenshot-1: url('/mnt/data/Screenshot 2025-11-21 203352.png');
+    --screenshot-2: url('/mnt/data/Screenshot 2025-11-21 203344.png');
+    --screenshot-3: url('/mnt/data/Screenshot 2025-11-21 203336.png');
+    --screenshot-4: url('/mnt/data/Screenshot 2025-11-21 203328.png');
+    --screenshot-5: url('/mnt/data/Screenshot 2025-11-21 203319.png');
+
+    /* transitions */
+    --speed-fast: 0.18s;
+    --speed: 0.28s;
+    --speed-slow: 0.45s;
+}
+
+/* DARK THEME (toggle by adding .dark to body) */
+body.dark {
+    --bg: #0d0d0f;
+    --surface: rgba(255, 255, 255, 0.04);
+    --muted: #9ca3af;
+    --text: #e8e8ea;
+    --glass-border: rgba(255, 255, 255, 0.06);
+    --card-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+}
+
+/* -------------------------
+   GLOBAL RESET + LAYOUT
+   ------------------------- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: all var(--speed) ease
+}
+
+html,
+body {
+    height: 100%
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding-bottom: 100px;
+    overflow-x: hidden;
+}
+
+/* container */
+.container {
+    max-width: 1000px;
+    margin: 36px auto;
+    padding: 28px;
+}
+
+/* utility */
+.row {
+    display: flex;
+    gap: 16px;
+    align-items: center
+}
+
+.col {
+    flex: 1
+}
+
+/* subtle global focus */
+:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.12)
+}
+
+/* -------------------------
+   HEADER / NAV
+   ------------------------- */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 220;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 28px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.55));
+    backdrop-filter: blur(20px) saturate(150%);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    min-height: 64px;
+}
+
+body.dark header {
+    background: linear-gradient(180deg, rgba(16, 16, 18, 0.7), rgba(20, 20, 24, 0.5));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px
+}
+
+.nav-left h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.4px
+}
+
+.top-nav {
+    display: flex;
+    gap: 22px;
+    align-items: center
+}
+
+.nav-item {
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+}
+
+.nav-item.active {
+    background: linear-gradient(180deg, var(--blue-1), var(--blue-2));
+    color: white;
+    box-shadow: 0 6px 18px rgba(10, 132, 255, 0.28);
+}
+
+/* logout button */
+.btn-logout {
+    border-radius: 12px;
+    padding: 10px 14px;
+    border: 2px solid rgba(10, 132, 255, 0.22);
+    background: transparent;
+    color: var(--blue-1);
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 8px 22px rgba(10, 132, 255, 0.08);
+}
+
+/* -------------------------
+   INPUTS
+   ------------------------- */
+.input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: var(--surface);
+    font-size: 15px;
+    color: var(--text);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.03);
+}
+
+body.dark .input {
+    border: 1px solid rgba(255, 255, 255, 0.06)
+}
+
+/* date/select small */
+.input.small {
+    min-width: 160px;
+    padding: 12px 14px
+}
+
+/* -------------------------
+   BUTTONS (primary / ghost / icon)
+   ------------------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(180deg, var(--blue-1), var(--blue-2));
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(10, 132, 255, 0.26);
+    transform: translateZ(0);
+}
+
+.btn:hover {
+    transform: translateY(-3px)
+}
+
+.btn.ghost {
+    background: transparent;
+    border: 2px solid rgba(10, 132, 255, 0.16);
+    color: var(--blue-1)
+}
+
+/* icon-circle */
+.icon-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #fff, #f7f9fc);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+body.dark .icon-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06)
+}
+
+/* ripple (needs JS to append .ripple-effect element) */
+.ripple {
+    position: relative;
+    overflow: hidden
+}
+
+.ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    opacity: 0.5;
+    animation: rippleAnim 600ms ease-out;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+@keyframes rippleAnim {
+    to {
+        transform: scale(4);
+        opacity: 0
+    }
+}
+
+/* -------------------------
+   CARDS / PANELS
+   ------------------------- */
+.card {
+    padding: 22px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(250, 250, 252, 0.95));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--card-shadow);
+    margin-bottom: 20px;
+    transform-origin: center center;
+}
+
+body.dark .card {
+    background: var(--surface);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: var(--card-shadow);
+}
+
+/* hover lift */
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.10)
+}
+
+/* small heading */
+.h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 14px
+}
+
+/* -------------------------
+   SUMMARY CARDS ROW
+   ------------------------- */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 20px
+}
+
+@media (max-width:900px) {
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr)
+    }
+}
+
+@media (max-width:520px) {
+    .summary-grid {
+        grid-template-columns: 1fr
+    }
+}
+
+.summary-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.95));
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.summary-card .muted {
+    color: var(--muted);
+    font-size: 13px
+}
+
+.summary-card .big {
+    font-size: 20px;
+    font-weight: 800
+}
+
+/* trend small */
+.trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 12px;
+    font-weight: 700
+}
+
+.trend.up {
+    background: linear-gradient(180deg, #e6f7ff, #eaf8ff);
+    color: #05668d;
+    border: 1px solid rgba(6, 102, 141, 0.06)
+}
+
+.trend.down {
+    background: linear-gradient(180deg, #fff3f3, #fff7f7);
+    color: #b91c1c;
+    border: 1px solid rgba(185, 28, 28, 0.06)
+}
+
+/* -------------------------
+   PROGRESS BAR (use inline --fill var to animate)
+   Example: <div class="progress-fill" style="--fill:72%"></div>
+   ------------------------- */
+.progress {
+    height: 12px;
+    background: linear-gradient(180deg, #eef2f7, #ffffff);
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.04)
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--blue-1), var(--blue-2));
+    box-shadow: 0 6px 18px rgba(10, 132, 255, 0.20);
+    transition: width 900ms cubic-bezier(.2, .9, .2, 1);
+    will-change: width;
+}
+
+/* JS should set style --fill to e.g. "60%" and also set width to var(--fill) */
+.progress-fill[style*="--fill"] {
+    width: var(--fill)
+}
+
+/* warning/over budget */
+.progress.warn .progress-fill {
+    background: linear-gradient(90deg, #ffb020, #ff6b6b)
+}
+
+.progress.over .progress-fill {
+    background: linear-gradient(90deg, #ff6b6b, #ff3b30)
+}
+
+/* -------------------------
+   LIST / ITEM CARDS
+   ------------------------- */
+.item-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #ffffff, #fbfbfd);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+    margin-bottom: 12px;
+}
+
+.item-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: #fff;
+    flex: 0 0 52px
+}
+
+.item-body {
+    display: flex;
+    flex-direction: column
+}
+
+.item-title {
+    font-weight: 800;
+    color: var(--text)
+}
+
+.item-sub {
+    font-size: 13px;
+    color: var(--muted)
+}
+
+/* actions */
+.item-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 8px
+}
+
+.item-actions .btn {
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: 10px
+}
+
+/* -------------------------
+   CATEGORIES GRID
+   ------------------------- */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px
+}
+
+.category-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    background: linear-gradient(180deg, #fff, #fbfbfd)
+}
+
+.category-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: #fff
+}
+
+.category-name {
+    font-weight: 700
+}
+
+.category-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 8px
+}
+
+/* -------------------------
+   FAB & FLOATING SIDEBAR
+   ------------------------- */
+.fab {
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, var(--blue-1), var(--blue-2));
+    color: white;
+    font-size: 30px;
+    box-shadow: 0 12px 30px rgba(10, 132, 255, 0.36);
+    z-index: 240;
+    cursor: pointer;
+}
+
+.fab:hover {
+    transform: scale(1.08)
+}
+
+/* floating sidebar (quick actions) */
+.quick-panel {
+    position: fixed;
+    right: 28px;
+    bottom: 110px;
+    width: 64px;
+    border-radius: 14px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: linear-gradient(180deg, #fff, #fbfdff);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+    z-index: 230;
+}
+
+body.dark .quick-panel {
+    background: var(--surface);
+    border: 1px solid rgba(255, 255, 255, 0.06)
+}
+
+/* -------------------------
+   MODAL (centered add expense)
+   ------------------------- */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(13, 16, 20, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--speed);
+}
+
+.modal-backdrop.show {
+    opacity: 1;
+    pointer-events: auto
+}
+
+.modal {
+    width: min(720px, 94%);
+    border-radius: 18px;
+    padding: 22px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 250, 252, 0.98));
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    transform: translateY(16px) scale(.99);
+    opacity: 0;
+    transition: all var(--speed-slow) cubic-bezier(.2, .9, .2, 1);
+}
+
+.modal-backdrop.show .modal {
+    transform: translateY(0) scale(1);
+    opacity: 1
+}
+
+/* modal header */
+.modal .modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px
+}
+
+.modal .modal-title {
+    font-size: 20px;
+    font-weight: 800
+}
+
+/* -------------------------
+   TOASTS
+   ------------------------- */
+.app-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all var(--speed)
+}
+
+.app-toast.show {
+    opacity: 1;
+    transform: translateY(0)
+}
+
+body.dark .app-toast {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text)
+}
+
+/* -------------------------
+   CHART CONTAINER (nice padding & card)
+   ------------------------- */
+.chart-card {
+    padding: 18px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #fff, #fbfbfd);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05)
+}
+
+.chart-wrapper {
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+/* -------------------------
+   SKELETON LOADER
+   ------------------------- */
+.skeleton {
+    background: linear-gradient(110deg, #eff0f3 0%, #fff 50%, #eff0f3 100%);
+    background-size: 200% 100%;
+    animation: shine 1.6s infinite linear;
+    border-radius: 10px
+}
+
+.skeleton.line {
+    height: 14px;
+    margin-bottom: 12px;
+    width: 100%
+}
+
+@keyframes shine {
+    0% {
+        background-position: 180% 0
+    }
+
+    100% {
+        background-position: -80% 0
+    }
+}
+
+/* -------------------------
+   FADE IN SMALL STAGGER (apply .stagger > * to animate children)
+   JS: add class .stagger-animate to trigger
+   ------------------------- */
+.fade-in {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 480ms var(--speed), transform 480ms var(--speed)
+}
+
+.fade-in.show {
+    opacity: 1;
+    transform: translateY(0)
+}
+
+.stagger>* {
+    opacity: 0;
+    transform: translateY(14px)
+}
+
+.stagger.stagger-animate>* {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 520ms cubic-bezier(.2, .9, .2, 1)
+}
+
+.stagger.stagger-animate>*:nth-child(1) {
+    transition-delay: 60ms
+}
+
+.stagger.stagger-animate>*:nth-child(2) {
+    transition-delay: 120ms
+}
+
+.stagger.stagger-animate>*:nth-child(3) {
+    transition-delay: 180ms
+}
+
+.stagger.stagger-animate>*:nth-child(4) {
+    transition-delay: 240ms
+}
+
+/* -------------------------
+   RESPONSIVE
+   ------------------------- */
+@media (max-width:980px) {
+    .container {
+        padding: 18px
+    }
+
+    .nav-left h1 {
+        font-size: 22px
+    }
+}
+
+@media (max-width:640px) {
+    header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px
+    }
+
+    .top-nav {
+        flex-wrap: wrap;
+        justify-content: center
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr
+    }
+
+    .item-card {
+        flex-direction: column;
+        align-items: flex-start
+    }
+
+    .quick-panel {
+        right: 16px;
+        bottom: 100px
+    }
+}
+
+/* ==========================
+     DASHBOARD LAYOUT
+     - Two-column responsive layout
+     - Left column: summary + add/expenses
+     - Right column: charts + budgets
+     ========================== */
+.dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        gap: 20px;
+        align-items: start;
+}
+
+/* Ensure the right column doesn't get too small on medium screens */
+@media (max-width:1100px) {
+    .dashboard-grid { grid-template-columns: 1fr 320px; }
+}
+
+@media (max-width:900px) {
+    .dashboard-grid { grid-template-columns: 1fr; }
+}
+
+.dashboard-left { display: flex; flex-direction: column; gap: 18px }
+.dashboard-right { display: flex; flex-direction: column; gap: 18px }
+
+/* Tighter form card inside dashboard */
+.dashboard-left .card, .dashboard-right .card {
+    padding: 18px;
+    border-radius: 14px;
+}
+
+/* Expenses list area: scrollable with max-height */
+.expenses-scroll {
+    max-height: 520px;
+    overflow: auto;
+    padding-right: 6px;
+}
+.expenses-scroll::-webkit-scrollbar { width: 8px }
+.expenses-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.06); border-radius: 8px }
+
+/* Chart card tweaks */
+.chart-card { padding: 16px; display:flex; flex-direction:column; gap:12px }
+.chart-card canvas { width:100% !important; height:260px !important }
+
+/* Small helpers for KPI row above dashboard */
+.kpi-row { display:flex; gap:12px; align-items:center }
+.kpi { flex:1; padding:12px; border-radius:12px; background:linear-gradient(180deg,#fff,#fbfbfd); border:1px solid rgba(0,0,0,0.04); }
+
+/* Make forms and lists visually connected using list-card */
+.dashboard-left .list-card, .dashboard-right .list-card { padding:14px }
+
+/* subtle responsive spacing */
+@media (max-width:520px) {
+    .chart-card canvas { height:200px !important }
+    .expenses-scroll { max-height:360px }
+}
+
+/* -------------------------
+   SMALL HELPERS
+   ------------------------- */
+.muted {
+    color: var(--muted)
+}
+
+.center {
+    text-align: center
+}
+
+.small {
+    font-size: 13px
+}
+
+.kicker {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 700;
+    letter-spacing: 0.6px
+}
+
+/* -------------------------
+   AUTH (login / register) — centered single card
+   ------------------------- */
+.auth-wrapper {
+    min-height: calc(100vh - 40px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 36px 16px;
+}
+.auth-card {
+    width: 480px;
+    max-width: calc(100% - 32px);
+    padding: 28px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,252,0.98));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--card-shadow);
+}
+.auth-brand { display:flex; align-items:center; gap:12px; margin-bottom:18px }
+.auth-brand img { width:46px; height:46px; border-radius:10px }
+.auth-title { font-size:20px; font-weight:800 }
+.auth-sub { color:var(--muted); font-size:13px; margin-top:6px }
+.auth-toggle { margin-top:12px; font-size:14px }
+.auth-toggle a { color:var(--blue-1); font-weight:700; text-decoration:none }
+.hidden { display:none !important }
+
+/* -------------------------
+   OPTIONAL: hero screenshot background utility
+   Use: <div class="hero-snap snap-1"></div>
+   ------------------------- */
+.hero-snap {
+    height: 180px;
+    border-radius: 14px;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06)
+}
+
+.hero-snap.snap-1 {
+    background-image: var(--screenshot-1)
+}
+
+.hero-snap.snap-2 {
+    background-image: var(--screenshot-2)
+}
+
+.hero-snap.snap-3 {
+    background-image: var(--screenshot-3)
+}
+
+.hero-snap.snap-4 {
+    background-image: var(--screenshot-4)
+}
+
+.hero-snap.snap-5 {
+    background-image: var(--screenshot-5)
+}
+
+/* -------------------------
+   SMALL ACCESSIBILITY / FOCUS STATES
+   ------------------------- */
+button:focus,
+a:focus,
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.12)
+}
+
+/* -------------------------
+   END OF CSS
+   ------------------------- */
+
+/* -------------------------
+   QUICK NOTES FOR JS INTEGRATION
+   -------------------------
+   1) Ripple effect:
+      - On button click append a .ripple-effect div at click coords and remove after animation.
+   2) Modal:
+      - Toggle backdrop .show to open/close modal.
+   3) Progress bars:
+      - Set style attribute on .progress-fill like: style="--fill: 72%";
+      - Optionally animate from 0 to value on page load via JS.
+   4) Stagger fade:
+      - Add .stagger and then add .stagger-animate (or .show on .fade-in children) after DOM ready.
+   5) Theme toggle:
+      - Add/remove .dark on document.body and save preference to localStorage.
+   6) Floating quick actions:
+      - Hook quick-panel buttons to open modal or scroll to section.
+   7) Toast:
+      - Add .show to .app-toast and remove after timeout (3–4s).
+   ------------------------- */

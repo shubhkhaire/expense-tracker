@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Expenses</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/__styles" />
+    <!-- page-specific styles moved to styles.css -->
+  </head>
+  <body>
+    <header>
+      <div class="nav-left">
+        <h1>Expenses</h1>
+      </div>
+      <nav class="top-nav">
+        <a class="nav-item" href="index.html">Home</a>
+        <a class="nav-item" href="dashboard.html">Dashboard</a>
+        <a class="nav-item" href="categories.html">Categories</a>
+        <a class="nav-item" href="budgets.html">Budgets</a>
+      </nav>
+      <div class="nav-right">
+        <button id="logout" class="btn ghost">Logout</button>
+      </div>
+    </header>
+    <main class="container">
+      <section>
+        <h2>Filter</h2>
+        <form id="filterForm" class="form card">
+          <div class="filter-row">
+            <label class="filter-label"
+              >From
+              <input class="input" type="date" id="fromDate" name="startDate" />
+            </label>
+            <label class="filter-label"
+              >To
+              <input class="input" type="date" id="toDate" name="endDate" />
+            </label>
+            <label class="filter-label">
+              <select
+                id="categoryFilter"
+                class="input"
+                aria-label="Category filter"
+              ></select>
+            </label>
+          </div>
+          <div class="filter-row">
+            <input class="input" type="text" id="search" placeholder="Search" />
+            <button class="btn" type="submit">Filter</button>
+          </div>
+        </form>
+      </section>
+
+      <section>
+        <h2>Expenses</h2>
+        <div id="expensesList"></div>
+        <div id="pager"></div>
+      </section>
+    </main>
+    <script src="js/navbar.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/expenses.js"></script>
+  </body>
+</html>

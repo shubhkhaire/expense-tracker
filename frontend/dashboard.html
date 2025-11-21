@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Fallback stylesheet served by backend for debugging -->
+    <link rel="stylesheet" href="/__styles" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-"
+      crossorigin="anonymous"
+    />
+    <!-- page-specific styles moved to styles.css -->
+  </head>
+  <body>
+    <header>
+      <div class="nav-left">
+        <h1>Dashboard</h1>
+      </div>
+      <nav class="top-nav">
+        <a class="nav-item" href="index.html">Home</a>
+        <a class="nav-item" href="expenses.html">Expenses</a>
+        <a class="nav-item" href="categories.html">Categories</a>
+        <a class="nav-item" href="budgets.html">Budgets</a>
+      </nav>
+      <div class="nav-right">
+        <button id="logout" class="btn ghost">Logout</button>
+      </div>
+    </header>
+    <main class="container">
+      <div class="dashboard-grid">
+        <div class="dashboard-left">
+          <section>
+            <h2 class="h2">Add Expense</h2>
+            <form id="expenseForm" class="form card">
+              <input
+                class="input"
+                type="text"
+                id="title"
+                placeholder="Title"
+                required
+              />
+              <input
+                class="input"
+                type="number"
+                id="amount"
+                placeholder="Amount"
+                required
+              />
+              <input class="input" type="date" id="date" required />
+              <select id="categorySelect" class="input">
+                <option value="">No category</option>
+              </select>
+              <input id="receipt" type="file" />
+              <div
+                style="
+                  display: flex;
+                  justify-content: flex-end;
+                  margin-top: 12px;
+                "
+              >
+                <button class="btn" type="submit">Add Expense</button>
+              </div>
+            </form>
+          </section>
+
+          <section>
+            <h2 class="h2">Expenses</h2>
+            <div class="expenses-scroll">
+              <div id="expensesList"></div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="dashboard-right">
+          <section>
+            <h2 class="h2">Monthly Chart</h2>
+            <div class="chart-card card">
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  margin-bottom: 8px;
+                "
+              >
+                <label class="kicker" for="chartYearSelect">Year</label>
+                <select
+                  id="chartYearSelect"
+                  class="input small"
+                  style="width: 120px"
+                ></select>
+              </div>
+              <canvas id="monthlyChart"></canvas>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="h2">By Category</h2>
+            <div class="chart-card card">
+              <canvas id="categoryChart"></canvas>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </main>
+    <!-- Toast container and FAB -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div
+        id="bsToast"
+        class="toast"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="toast-body"></div>
+      </div>
+    </div>
+
+    <button class="fab btn btn-primary btn-animated" aria-label="Add">+</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity=""
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
